@@ -24,7 +24,8 @@ app.get("/", (req, res) => {
   res.send("Hello Technigo!");
 });
 
-app.post("/users", async (req, res) => {
+//Registration endpoint, to create a new user.
+app.post("/sign-up", async (req, res) => {
   try {
     const { name, email, password } = req.body;
     const user = new User({
@@ -41,6 +42,8 @@ app.post("/users", async (req, res) => {
   }
 });
 
+//An authenticated endpoint which only returns content if the `Authorization` header with the user's token was correct.
+
 const authenticateUser = async (req, res, next) => {
   const user = await User.findOne({ accessToken: req.header("Authorization") })
   if(user) {
@@ -51,9 +54,10 @@ const authenticateUser = async (req, res, next) => {
   }
 }
 
-app.get("secrets", authenticateUser)
-app.get("/secrets", async (req, res) => {
-  res.json({ secret: "this is a super secret message" });
+app.get("sign-in", authenticateUser)
+
+app.get("/sign-in", async (req, res) => {
+  res.json({ secret: "You are successfully signed in" });
 });
 
 // Start the server
