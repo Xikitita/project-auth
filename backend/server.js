@@ -54,6 +54,9 @@ app.post("/sign-up", async (req, res) => {
 
 
 //Middlewares
+
+//An authenticated endpoint which only returns content if the `Authorization` header with the user's token was correct.
+
 const authenticateUser = async (req, res, next) => {
   const user = await User.findOne({ accessToken: req.header("Authorization") })
   if(user) {
@@ -74,6 +77,11 @@ app.get("/sign-in", async (req, res) => {
   } else {
     res.json({notFound: true})
   }
+
+
+
+app.get("/sign-in", async (req, res) => {
+  res.json({ secret: "You are successfully signed in" });
 });
 
 // Start the server
