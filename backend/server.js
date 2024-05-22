@@ -2,14 +2,9 @@ import cors from "cors";
 import express from "express";
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
-import User from "./models/User";
-import expressListEndpoints from "express-list-endpoints";
-import dotenv from "dotenv";
+import User from "./models/User"
 
-//.env
-dotenv.config()
-
-const mongoUrl = process.env.MONGO_URL || "mongodb://localhost/project-auth";
+const mongoUrl = process.env.MONGO_URL || "mongodb://localhost/project-mongo";
 mongoose.connect(mongoUrl);
 mongoose.Promise = Promise;
 
@@ -23,25 +18,19 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Route handler
-app.get("/", (req, res) => {
-  const endpoints = expressListEndpoints(app)
-  res.json(endpoints)
-})
 
 // Start defining your routes here
 app.get("/", (req, res) => {
-  res.send("This is the backend!");
+  res.send("Hello Technigo!");
 });
 
-//Registration endpoint, to create a new user.
-app.post("/sign-up", async (req, res) => {
+app.post("/users", async (req, res) => {
   try {
     const { name, email, password } = req.body;
     const user = new User({
       name,
       email,
-      password: bcrypt.hashSync(password),
+      password: bcrypt.hashSync(password, 10),
   });
     await user.save();
     res.status(201).json({ id: user._id, accessToken: user.accessToken });
@@ -51,11 +40,6 @@ app.post("/sign-up", async (req, res) => {
       .json({ message: "Could not create user", error: err.message });
   }
 });
-
-
-//Middlewares
-
-//An authenticated endpoint which only returns content if the `Authorization` header with the user's token was correct.
 
 const authenticateUser = async (req, res, next) => {
   const user = await User.findOne({ accessToken: req.header("Authorization") })
@@ -67,21 +51,9 @@ const authenticateUser = async (req, res, next) => {
   }
 }
 
-
-app.get("sign-in", authenticateUser)
-app.get("/sign-in", async (req, res) => {
-  const user = await User.findOne({name: req.body.name});
-  
-  if (user && bcrypt.compareSync(req.body.password, user.password)) {
-    res.json({userId: user._id, accessToken: user.accessToken});
-  } else {
-    res.json({notFound: true})
-  }
-
-
-
-app.get("/sign-in", async (req, res) => {
-  res.json({ secret: "You are successfully signed in" });
+app.get("secrets", authenticateUser)
+app.get("/secrets", async (req, res) => {
+  res.json({ secret: "this is a super secret message" });
 });
 
 // Start the server
