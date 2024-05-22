@@ -1,6 +1,8 @@
 import cors from "cors";
 import express from "express";
 import mongoose from "mongoose";
+import bcrypt from "bcrypt";
+import User from "./models/User"
 
 const mongoUrl = process.env.MONGO_URL || "mongodb://localhost/project-mongo";
 mongoose.connect(mongoUrl);
@@ -16,9 +18,42 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+
 // Start defining your routes here
 app.get("/", (req, res) => {
   res.send("Hello Technigo!");
+});
+
+app.post("/users", async (req, res) => {
+  try {
+    const { name, email, password } = req.body;
+    const user = new User({
+      name,
+      email,
+      password: bcrypt.hashSync(password, 10),
+  });
+    await user.save();
+    res.status(201).json({ id: user._id, accessToken: user.accessToken });
+  } catch (err) {
+    res
+      .status(400)
+      .json({ message: "Could not create user", error: err.message });
+  }
+});
+
+const authenticateUser = async (req, res, next) => {
+  const user = await User.findOne({ accessToken: req.header("Authorization") })
+  if(user) {
+    req.user = user
+    next()
+  } else {
+    res.status(401).json({ loggedOut: true })
+  }
+}
+
+app.get("secrets", authenticateUser)
+app.get("/secrets", async (req, res) => {
+  res.json({ secret: "this is a super secret message" });
 });
 
 // Start the server

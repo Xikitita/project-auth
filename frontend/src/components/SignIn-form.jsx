@@ -1,7 +1,13 @@
-import React from 'react'
+import React from "react"
 
 export const SignIn = () => {
   return (
-    <div>Sign-in-form</div>
+    <>
+      <form>
+        <textarea value={name} placeholder="enter your name here" />
+        <textarea value={email} />
+        <textarea value={password} />
+      </form>
+    </>
   )
 }

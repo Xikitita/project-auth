@@ -1,6 +1,11 @@
-
-export const Registration = () => {
+export const Registration = ({}) => {
   return (
-    <div>Registration-form</div>
+    <>
+      <form>
+        <textarea value={name} placeholder="enter your name here" />
+        <textarea value={email} />
+        <textarea value={password} />
+      </form>
+    </>
   )
 }
