@@ -23,14 +23,14 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-//Middleware to authenticate User
+//Middleware to authenticate user with accesstoken
 const authenticateUser = async (req, res, next) => {
   const user = await User.findOne({ accessToken: req.header("Authorization") })
   if(user) {
     req.user = user
     next()
   } else {
-    res.status(401).json({ loggedOut: true, message: "You have to log in" })
+    res.status(401).json({ loggedOut: true, message: "You have to log in to view this page" })
   }
 }
 
@@ -68,7 +68,7 @@ app.post("/signup", async (req, res) => {
 
 app.get("/loggedin", authenticateUser);
 app.get("/loggedin", (req, res) => {
-  res.json({loggedin: "You are now logged in"})
+  res.json({loggedin: "You are logged in and can view this secret message :)"})
 })
 
 app.post("/signin", async (req, res) => {
