@@ -1,17 +1,17 @@
-import { Button } from "./Button.jsx"
-import { useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { Button } from "./Button.jsx";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const SignInForm = ({ onLogin }) => {
   // State to manage user input
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [error, setError] = useState("")
-  const navigate = useNavigate()
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   // Handle sign in
   const handleSignIn = async (event) => {
-    event.preventDefault()
+    event.preventDefault();
 
     // POST request to autheticate the user
     try {
@@ -24,34 +24,34 @@ export const SignInForm = ({ onLogin }) => {
           },
           body: JSON.stringify({ email, password }),
         }
-      )
+      );
 
       //If authetication ok, call onLogin and redirect to logged in page
       if (response.ok) {
-        const data = await response.json()
-        onLogin(data)
-        navigate("/loggedin")
+        const data = await response.json();
+        onLogin(data);
+        navigate("/loggedin");
       } else {
         // If login fails, update error state
-        const errorData = await response.json()
-        setError(errorData.error)
+        const errorData = await response.json();
+        setError(`Login failed: ${errorData.error}`);
 
         if (
           response.status === 401 &&
           errorData.error === "Invalid email or password, please try again"
         ) {
           //Error message if user writes wrong email or password
-          setError("Invalid email or password, please try again")
+          setError("Invalid email or password, please try again");
         } else {
           // Display general error message
-          setError(`Login failed: ${errorData.error}`)
+          setError(`Login failed: ${errorData.error}`);
         }
       }
     } catch (error) {
       // If unexpected error
-      setError(`Error during login: ${error.message}`)
+      setError(`Error during login: ${error.message}`);
     }
-  }
+  };
 
   return (
     <>
@@ -75,9 +75,9 @@ export const SignInForm = ({ onLogin }) => {
             onChange={(event) => setPassword(event.target.value)}
           />
         </label>
-        <Button onClick={handleSignIn} />
+        <Button type="submit" />
         {error && <p>{error}</p>}
       </form>
     </>
-  )
-}
+  );
+};
