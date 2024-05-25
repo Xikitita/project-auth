@@ -1,7 +1,6 @@
 export const Button = ({
-  signUpMode,
   handleSignUp,
-  onLogin,
+  handleSignIn,
   onSignOut,
   isAuthenticated,
 }) => {
@@ -10,10 +9,21 @@ export const Button = ({
       {isAuthenticated ? (
         <button onClick={onSignOut}>Sign Out</button>
       ) : (
-        <button type="submit" onClick={signUpMode ? handleSignUp : onLogin}>
-          {signUpMode ? "SIGN UP" : "LOGIN"}
-        </button>
+        <>
+          <button type="submit" onClick={handleSignUp}>
+            SIGN UP
+          </button>
+          <button type="submit" onClick={handleSignIn}>
+            SIGN IN
+          </button>
+        </>
       )}
     </div>
   )
+}
+
+{
+  /* <button type="submit" onClick={signUpMode ? handleSignUp : onLogin}>
+{signUpMode ? "SIGN UP" : "SIGN IN"}
+</button> */
 }

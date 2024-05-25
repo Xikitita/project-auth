@@ -5,12 +5,13 @@ import { LoggedIn } from "../components/LoggedIn"
 
 export const routes = ({ isAuthenticated }) => (
   <>
-    <Route path="/signup" element={<SignUpForm />} />
     <Route path="/signin" element={<SignInForm />} />
+    <Route path="/signup" element={<SignUpForm />} />
     <Route
       path="/loggedin"
       element={isAuthenticated ? <LoggedIn /> : <Navigate to="/signup" />}
     />
+
     <Route
       path="/"
       element={
@@ -23,3 +24,16 @@ export const routes = ({ isAuthenticated }) => (
     />
   </>
 )
+
+{
+  /* <Route 
+path="/"
+element={
+  isAuthorized ? (
+    <Navigate to="/signin" />
+  ) : ( 
+  <Navigate to="/loggedin" />
+)
+}
+/> */
+}

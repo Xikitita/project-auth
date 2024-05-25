@@ -75,7 +75,7 @@ export const SignInForm = ({ onLogin }) => {
             onChange={(event) => setPassword(event.target.value)}
           />
         </label>
-        <Button onLogin={handleSignIn} />
+        <Button onClick={handleSignIn} />
         {error && <p>{error}</p>}
       </form>
     </>

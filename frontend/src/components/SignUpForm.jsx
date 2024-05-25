@@ -41,6 +41,10 @@ export const SignUpForm = () => {
     }
   }
 
+  const handleSignIn = () => {
+    navigate("/signin")
+  }
+
   return (
     <>
       <form onSubmit={handleSignUp}>
@@ -78,7 +82,7 @@ export const SignUpForm = () => {
 
         <Button
           handleSignUp={handleSignUp}
-          signUpMode={!isAuthenticated}
+          handleSignIn={handleSignIn}
           isAuthenticated={isAuthenticated}
         />
       </form>
