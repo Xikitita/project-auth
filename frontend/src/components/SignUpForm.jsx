@@ -11,6 +11,7 @@ export const SignUpForm = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const navigate = useNavigate()
 
+  //Function to handle signup
   const handleSignUp = async (event) => {
     event.preventDefault()
 
@@ -25,7 +26,6 @@ export const SignUpForm = () => {
           body: JSON.stringify({ name, email, password }),
         }
       )
-
       if (response.ok) {
         const data = await response.json()
         localStorage.setItem("accessToken", data.accessToken)
@@ -44,10 +44,11 @@ export const SignUpForm = () => {
   return (
     <>
       <form onSubmit={handleSignUp}>
-        <h3>Register here:</h3>
+        <h3>Sign up here:</h3>
 
         <label>
           <input
+            type="text"
             value={name}
             placeholder="Enter your name here"
             required
@@ -57,6 +58,7 @@ export const SignUpForm = () => {
 
         <label>
           <input
+            type="email"
             value={email}
             placeholder="Enter your email here"
             required
@@ -66,6 +68,7 @@ export const SignUpForm = () => {
 
         <label>
           <input
+            type="password"
             value={password}
             placeholder="Enter your password here"
             required
@@ -73,7 +76,11 @@ export const SignUpForm = () => {
           />
         </label>
 
-        <Button handleSignUp={handleSignUp} signUpMode={!isAuthenticated} />
+        <Button
+          handleSignUp={handleSignUp}
+          signUpMode={!isAuthenticated}
+          isAuthenticated={isAuthenticated}
+        />
       </form>
       {errorMessage && <p>{errorMessage}</p>}
     </>

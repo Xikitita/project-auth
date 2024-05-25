@@ -1,29 +1,19 @@
-export const Button = ({ signUpMode, handleSignUp }) => {
+export const Button = ({
+  signUpMode,
+  handleSignUp,
+  onLogin,
+  onSignOut,
+  isAuthenticated,
+}) => {
   return (
     <div>
-      <button type="submit" onClick={handleSignUp}>
-        {signUpMode ? "SIGN UP" : "LOGIN"}
-      </button>
+      {isAuthenticated ? (
+        <button onClick={onSignOut}>Sign Out</button>
+      ) : (
+        <button type="submit" onClick={signUpMode ? handleSignUp : onLogin}>
+          {signUpMode ? "SIGN UP" : "LOGIN"}
+        </button>
+      )}
     </div>
   )
 }
-
-// export const Button = ({
-//   signUpMode,
-//   handleSignUp,
-//   handleLogin,
-//   handleSignOut,
-//   isAuthenticated,
-// }) => {
-//   return (
-//     <div>
-//       {isAuthenticated ? (
-//         <button onClick={handleSignOut}>SIGN OUT</button>
-//       ) : (
-//         <button type="submit" onClick={signUpMode ? handleSignUp : handleLogin}>
-//           {signUpMode ? "SIGN UP" : "LOGIN"}
-//         </button>
-//       )}
-//     </div>
-//   )
-// }

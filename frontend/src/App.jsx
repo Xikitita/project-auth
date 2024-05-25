@@ -1,13 +1,12 @@
-import { BrowserRouter } from "react-router-dom"
-import { SignUpForm } from "./components/SignUpForm.jsx"
-// import { SignInForm } from "./components/SignInForm.jsx"
+import { BrowserRouter, Routes } from "react-router-dom"
+import { routes } from "./routes/routes.jsx"
 
 export const App = () => {
+  const isAuthenticated = false
+
   return (
     <BrowserRouter>
-      <div>
-        <SignUpForm />
-      </div>
+      <Routes>{routes({ isAuthenticated })}</Routes>
     </BrowserRouter>
   )
 }
