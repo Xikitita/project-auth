@@ -1,8 +1,8 @@
-import { Button } from "./Button.jsx";
+//import { Button } from "./Button.jsx";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export const SignInForm = ({ onLogin }) => {
+export const SignInForm = ({ setIsAuthenticated }) => {
   // State to manage user input
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -11,7 +11,8 @@ export const SignInForm = ({ onLogin }) => {
 
   // Handle sign in
   const handleSignIn = async (event) => {
-    event.preventDefault();
+    event.preventDefault()
+    
 
     // POST request to autheticate the user
     try {
@@ -29,7 +30,8 @@ export const SignInForm = ({ onLogin }) => {
       //If authetication ok, call onLogin and redirect to logged in page
       if (response.ok) {
         const data = await response.json();
-        onLogin(data);
+        localStorage.setItem("accessToken", data.accessToken)
+        setIsAuthenticated(true)
         navigate("/loggedin");
       } else {
         // If login fails, update error state
@@ -75,7 +77,9 @@ export const SignInForm = ({ onLogin }) => {
             onChange={(event) => setPassword(event.target.value)}
           />
         </label>
-        <Button type="submit" />
+          <button type="submit" onClick={handleSignIn}>
+            SIGN IN
+          </button>
         {error && <p>{error}</p>}
       </form>
     </>

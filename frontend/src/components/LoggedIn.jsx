@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { Button } from "./Button.jsx"
+// import { Button } from "./Button.jsx"
 
 export const LoggedIn = () => {
   //State to see if user is logged in or not based on authentication
@@ -29,7 +29,7 @@ export const LoggedIn = () => {
       {isLoggedIn ? (
         <>
           <h1>You have successfully logged in!</h1>
-          <Button onClick={handleSignOut}>Sign Out</Button>
+          <button onClick={handleSignOut}>Sign Out</button>
         </>
       ) : (
         <p>You are not logged in</p>
