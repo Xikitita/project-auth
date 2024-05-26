@@ -20,7 +20,7 @@ export const LoggedIn = () => {
   const handleSignOut = () => {
     localStorage.removeItem("accessToken"); //Remove saved accessToken
     setIsLoggedIn(false);
-    navigate("/signin");
+    navigate("/signup");
   };
 
   return (
