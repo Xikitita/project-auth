@@ -1,13 +1,16 @@
-import { BrowserRouter, Routes } from "react-router-dom"
-import { routes } from "./routes/routes.jsx"
-import { useState } from "react"
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { SignUpForm } from "../src/components/SignUpForm";
+import { SignInForm } from "../src/components/SignInForm";
+import { LoggedIn } from "../src/components/LoggedIn";
 
 export const App = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
-
   return (
     <BrowserRouter>
-      <Routes>{routes({ isAuthenticated, setIsAuthenticated })}</Routes>
+      <Routes>
+        <Route path="/signin" element={<SignInForm />} />
+        <Route path="/signup" element={<SignUpForm />} />
+        <Route path="/loggedin" element={<LoggedIn />} />
+      </Routes>
     </BrowserRouter>
-  )
-}
+  );
+};

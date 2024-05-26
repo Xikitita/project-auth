@@ -1,28 +1,27 @@
-import { useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom"
-// import { Button } from "./Button.jsx"
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const LoggedIn = () => {
   //State to see if user is logged in or not based on authentication
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
-  const navigate = useNavigate()
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const accessToken = localStorage.getItem("accessToken")
+    const accessToken = localStorage.getItem("accessToken");
 
     if (accessToken) {
-      setIsLoggedIn(true) //If there is an accesstoken, isLoggedIn is set to true
+      setIsLoggedIn(true); //If there is an accesstoken, isLoggedIn is set to true
     } else {
-      navigate("/signin") //If there is no accesstoken, navigate to signin
+      navigate("/signin"); //If there is no accesstoken, navigate to signin
     }
-  }, [navigate])
+  }, [navigate]);
 
   //Function to handle signout
   const handleSignOut = () => {
-    localStorage.removeItem("accessToken") //Remove saved accessToken
-    setIsLoggedIn(false)
-    navigate("/signin")
-  }
+    localStorage.removeItem("accessToken"); //Remove saved accessToken
+    setIsLoggedIn(false);
+    navigate("/signin");
+  };
 
   return (
     <div>
@@ -35,5 +34,5 @@ export const LoggedIn = () => {
         <p>You are not logged in</p>
       )}
     </div>
-  )
-}
+  );
+};

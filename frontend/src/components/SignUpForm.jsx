@@ -2,12 +2,13 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export const SignUpForm = ({ setIsAuthenticated }) => {
+export const SignUpForm = () => {
   //State variables
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const navigate = useNavigate();
 
   //Function to handle signup
@@ -46,6 +47,9 @@ export const SignUpForm = ({ setIsAuthenticated }) => {
 
   return (
     <>
+      {isAuthenticated ? (
+        <p>You are already signed up and logged in.</p>
+      ) : (
         <form onSubmit={handleSignUp}>
           <h3>Sign up here:</h3>
 
@@ -81,7 +85,7 @@ export const SignUpForm = ({ setIsAuthenticated }) => {
 
           <button type="submit">SIGN UP</button>
         </form>
-
+      )}
       <p>Already registered?</p>
       <button type="button" onClick={handleSignIn}>
         SIGN IN
