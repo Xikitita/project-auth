@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom"
-import { SignUpForm } from "../components/SignUpForm"
-import { SignInForm } from "../components/SignInForm"
-import { LoggedIn } from "../components/LoggedIn"
+import { SignUpForm } from "../components/SignUpForm/SignUpForm.jsx"
+import { SignInForm } from "../components/SignInForm/SignInForm.jsx"
+import { LoggedIn } from "../components/LoggedIn/LoggedIn.jsx"
 
 export const AuthRoutes = () => {
   return (

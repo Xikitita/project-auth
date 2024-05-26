@@ -1,18 +1,19 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react"
+import { useNavigate } from "react-router-dom"
+import "./SignInForm.css"
 
 export const SignInForm = () => {
   // State to manage user input
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [error, setError] = useState("")
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   // Handle sign in
 
   const handleSignIn = async (event) => {
-    event.preventDefault();
+    event.preventDefault()
 
     // POST request to autheticate the user
     try {
@@ -25,40 +26,40 @@ export const SignInForm = () => {
           },
           body: JSON.stringify({ email, password }),
         }
-      );
+      )
 
       //If authetication ok, call onLogin and redirect to logged in page
       if (response.ok) {
-        const data = await response.json();
+        const data = await response.json()
 
-        localStorage.setItem("accessToken", data.accessToken);
-        navigate("/loggedin");
+        localStorage.setItem("accessToken", data.accessToken)
+        navigate("/loggedin")
       } else {
         // If login fails, update error state
-        const errorData = await response.json();
-        setError(`Login failed: ${errorData.error}`);
+        const errorData = await response.json()
+        setError(`Login failed: ${errorData.error}`)
 
         if (
           response.status === 401 &&
           errorData.error === "Invalid email or password, please try again"
         ) {
           //Error message if user writes wrong email or password
-          setError("Invalid email or password, please try again");
+          setError("Invalid email or password, please try again")
         } else {
           // Display general error message
-          setError(`Login failed: ${errorData.error}`);
+          setError(`Login failed: ${errorData.error}`)
         }
       }
     } catch (error) {
       // If unexpected error
-      setError(`Error during login: ${error.message}`);
+      setError(`Error during login: ${error.message}`)
     }
-  };
+  }
 
   return (
     <>
-      <form>
-        <h3>Sign in here:</h3>
+      <form onSubmit={handleSignIn} className="signin-form">
+        <h2>Sign in here</h2>
 
         <label>
           <input
@@ -77,11 +78,11 @@ export const SignInForm = () => {
             onChange={(event) => setPassword(event.target.value)}
           />
         </label>
-        <button type="submit" onClick={handleSignIn}>
-          SIGN IN
+        <button type="submit" onClick={handleSignIn} className="signin-button">
+          Sign in
         </button>
         {error && <p>{error}</p>}
       </form>
     </>
-  );
-};
+  )
+}

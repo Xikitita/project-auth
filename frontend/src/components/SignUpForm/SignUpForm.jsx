@@ -26,18 +26,20 @@ export const SignUpForm = () => {
           body: JSON.stringify({ name, email, password }),
         }
       )
+
       if (response.ok) {
         const data = await response.json()
         localStorage.setItem("accessToken", data.accessToken)
         setIsAuthenticated(true)
         navigate("/loggedin")
       } else {
-        const error = await response.json()
-        setErrorMessage(error.error)
+        const errorData = await response.json()
+        const errorMessage = errorData.message || "Could not sign up"
+        setErrorMessage(errorMessage)
       }
     } catch (error) {
       console.error("Error, could not sign up:", error)
-      setErrorMessage("An error occured while signing up")
+      setErrorMessage("An error occurred while signing up")
     }
   }
 

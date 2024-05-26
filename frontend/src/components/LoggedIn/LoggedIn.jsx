@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
+import Lottie from "lottie-react"
+import animationData from "../LoggedIn/Animation.json"
+import "./LoggedIn.css"
 
 export const LoggedIn = () => {
   //State to see if user is logged in or not based on authentication
@@ -24,11 +27,14 @@ export const LoggedIn = () => {
   }
 
   return (
-    <div>
+    <div className="loggedin-container">
       {isLoggedIn ? (
         <>
-          <h1>You have successfully logged in!</h1>
-          <button onClick={handleSignOut}>Sign Out</button>
+          <h2>You have successfully logged in!</h2>
+          <Lottie animationData={animationData} />
+          <button onClick={handleSignOut} className="signout-button">
+            Sign Out
+          </button>
         </>
       ) : (
         <p>You are not logged in</p>
